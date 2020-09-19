@@ -13,9 +13,12 @@ export default function QuestionAnswerer (props) {
     }
 
     function onButtonPressed(team){
-        postAnswer(props.questionID, inputStr)
+        postAnswer(props.questionID, inputStr).then(res=>{
+            props.onQuestionAnswered(res)
+        })
+
+        console.log("posted")
         setInputStr("");
-        props.onQuestionAnswered();
     }
     
     return (

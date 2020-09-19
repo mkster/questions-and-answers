@@ -12,10 +12,11 @@ export default function QuestionAsker (props) {
         setInputStr(str);
     }
 
-    function onButtonPressed(team){
-        postQuestion(inputStr)
+    function onButtonPressed(){
+        postQuestion(inputStr).then(res => {
+            props.onQuestionAsked(res)
+        })
         setInputStr("");
-        props.onQuestionAsked(); 
     }
     
     return (

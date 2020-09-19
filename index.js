@@ -54,8 +54,8 @@ app.get("/question/:questionID/answers/:authorID", async (req, res, next) => {
 //create
 app.post("/question", async (req, res, next) => {
     try {
-        const todo = await db.Question.create(req.body)
-        return success(res, todo)
+        const question = await db.Question.create(req.body)
+        return success(res, question)
     } catch (err) {
         next({ status: 400, message: err })
     }
@@ -64,8 +64,8 @@ app.post("/question", async (req, res, next) => {
 //create
 app.post("/answer", async (req, res, next) => {
     try {
-        const todo = await db.Answer.create(req.body)
-        return success(res, todo)
+        const answer = await db.Answer.create(req.body)
+        return success(res, answer)
     } catch (err) {
         next({ status: 400, message: err })
     }
