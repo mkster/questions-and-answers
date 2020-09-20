@@ -53,7 +53,7 @@ function useGet(url, intialState = []){
             setResponse(result.data)
         }, failReason => {
             //failed
-            console.log("get fail");
+            console.log("get fail " + failReason);
             setResponse([])
         })
 
@@ -77,7 +77,7 @@ async function post(url, data) {
         return result.data
     }, failReason => {
         //failed
-        console.log("post fail");
+        console.log("post fail " + failReason);
         return []
     })
     return res;
