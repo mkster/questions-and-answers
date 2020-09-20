@@ -63,7 +63,6 @@ function useGet(url, intialState = []){
 
 //returns [] or result
 async function post(url, data) {
-    console.log(data)
     const res = axios.post(url, data).then(result => {
         return result.data
     }, failReason => {

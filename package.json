@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "git push heroku master",
     "start": "node index.js",
     "start:dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-prebuild": "echo This runs before Heroku installs dependencies. && echo test2",
-    "heroku-postbuild": "cd frontend && npm install --only=dev && npm install && npm run build && echo ran the build"
+    "heroku-postbuild": "cd frontend && npm install --only=dev && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
