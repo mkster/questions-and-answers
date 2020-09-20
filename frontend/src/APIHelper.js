@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react'
 const axios = require('axios').default;
-const backend = 'http://localhost:3001/'
+const backend = ''//'http://localhost:3001/' //this is done by "proxy" in package.json
 
 const currentUserID = 1; //TODO I guess normally the backedn should know current user instead of passing it here
 
@@ -47,7 +47,7 @@ function useGet(url, intialState = []){
 
     //fetch from backend
     function updateGetNetwork(){
-        console.log("getting"+ url);
+        console.log("getting "+ url);
         axios.get(url).then(result => {
             console.log("get suc " + result.data);
             setResponse(result.data)
@@ -71,9 +71,9 @@ function useGet(url, intialState = []){
 
 //returns [] or result
 async function post(url, data) {
-    console.log("posting" + url + " " + data);
+    console.log("posting " + url + " " + data);
     const res = axios.post(url, data).then(result => {
-        console.log("post sucess" + result.data);
+        console.log("post sucess " + result.data);
         return result.data
     }, failReason => {
         //failed
