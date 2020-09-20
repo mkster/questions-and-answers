@@ -12,19 +12,17 @@ export default function QuestionAnswerer (props) {
         setInputStr(str);
     }
 
-    function onButtonPressed(team){
+    function onButtonPressed(){
         postAnswer(props.questionID, inputStr).then(res=>{
             props.onQuestionAnswered(res)
         })
-
-        console.log("posted")
         setInputStr("");
     }
     
     return (
         <div>
             <input type="text" value={inputStr} onChange={handleChange}/>
-            <button onClick={()=>onButtonPressed(inputStr)}>Answer</button>
+            <button onClick={()=>onButtonPressed()}>Answer</button>
         </div>
     )
 }

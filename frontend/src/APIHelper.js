@@ -1,5 +1,5 @@
 
-import React, { Component, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 const axios = require('axios').default;
 const backend = 'http://localhost:3001/'
 
@@ -40,16 +40,24 @@ export async function postAnswer(questionID, answerText) {
 //returns [] or result and function to refresh result
 function useGet(url, intialState = []){
     const [response, setResponse] = useState(intialState);
-    useEffect(updateGetNetwork, [url])
+    useEffect(()=>{
+        updateGetNetwork()
+        //should return cancel axios func here
+    }, [url])
 
     //fetch from backend
     function updateGetNetwork(){
+        console.log("getting"+ url);
         axios.get(url).then(result => {
+            console.log("get suc " + result.data);
             setResponse(result.data)
         }, failReason => {
             //failed
+            console.log("get fail");
             setResponse([])
         })
+
+
     }
 
     //set value manually for example if user added new data locla but hasent fetched yet
@@ -63,10 +71,13 @@ function useGet(url, intialState = []){
 
 //returns [] or result
 async function post(url, data) {
+    console.log("posting" + url + " " + data);
     const res = axios.post(url, data).then(result => {
+        console.log("post sucess" + result.data);
         return result.data
     }, failReason => {
         //failed
+        console.log("post fail");
         return []
     })
     return res;

@@ -26,7 +26,7 @@ export default function QuestionAsker (props) {
     return (
         <div>
             <input type="text" value={inputStr} onChange={handleChange}/>
-            <button onClick={()=>onButtonPressed(inputStr)}>Ask</button>
+            <button onClick={()=>onButtonPressed()}>Ask</button>
         </div>
     )
 }

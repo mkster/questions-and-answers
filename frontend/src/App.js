@@ -25,6 +25,7 @@ export default function App() {
   const [questions, setQuestions, fetchQuestions] = useAllQuestions();
   
   function onQuestionAsked(addition) {
+    console.log("add" + addition)
     if (addition != []) {
       setQuestions([...questions, addition])
     }
