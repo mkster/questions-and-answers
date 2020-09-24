@@ -16,6 +16,9 @@ export default function Question(props) {
   const [answers, setAnswers, fetchAnswers] = useAnswers(question._id);
   const [questionAnswered, setQuestionAnswered] = useState(false);
 
+  console.log(question)
+  console.log(answers[0]);
+  
   //if new question set not answered
   useEffect(()=>{
     setQuestionAnswered(false)

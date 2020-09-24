@@ -13,6 +13,7 @@ export function useAllQuestions() {
 
 export function useAnswers(questionID) {
     const url = backend + `question/${questionID}/answers`
+    console.log("useAnswers" + questionID)
     return useGet(url)
 }
 
@@ -44,7 +45,7 @@ function useGet(url, intialState = []){
 
     useEffect(()=>{
         updateGetNetwork()
-        return (cancelToken.cancel) //cancel ongoing request on unmount/rerender
+        //return (cancelToken.cancel) //cancel ongoing request on unmount/rerender
     }, [url])
 
     //fetch from backend
@@ -60,6 +61,8 @@ function useGet(url, intialState = []){
             if (!axios.isCancel(failReason)) {
                 console.log("get fail " + failReason);
                 setResponse([])
+            }else{
+                console.log("axious cancel get")
             }
         })
     }
