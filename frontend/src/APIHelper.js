@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react';
 const axios = require('axios').default;
 const backend = ''//'http://localhost:3001/' //this is done by "proxy" in package.json
 
@@ -40,24 +40,28 @@ export async function postAnswer(questionID, answerText) {
 //returns [] or result and function to refresh result
 function useGet(url, intialState = []){
     const [response, setResponse] = useState(intialState);
+    const [cancelToken, setCancelToken] = useState(axios.CancelToken.source());
+
     useEffect(()=>{
         updateGetNetwork()
-        //should return cancel axios func here
+        return (cancelToken.cancel) //cancel ongoing request on unmount/rerender
     }, [url])
 
     //fetch from backend
     function updateGetNetwork(){
         console.log("getting "+ url);
-        axios.get(url).then(result => {
+        const token = cancelToken.token;
+        axios.get(url, {cancelToken: token}).then(result => {
             console.log("get suc " + result.data);
             setResponse(result.data)
         }, failReason => {
             //failed
-            console.log("get fail " + failReason);
-            setResponse([])
+            //dont set state on cancled request since the component is already unmounted
+            if (!axios.isCancel(failReason)) {
+                console.log("get fail " + failReason);
+                setResponse([])
+            }
         })
-
-
     }
 
     //set value manually for example if user added new data locla but hasent fetched yet

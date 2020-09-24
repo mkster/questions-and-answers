@@ -1,31 +1,52 @@
-import React, { Component, useState } from 'react'
-import { connect, useSelector } from 'react-redux';
+import { Button, Space } from 'antd';
+import React, { useEffect } from 'react';
 import { postAnswer } from '../APIHelper';
+import useInput from './useInput';
 
 
 //make component Input and combine with button here
 export default function QuestionAnswerer (props) {
-    const [inputStr, setInputStr] = useState("")
+    const styleInput = {}
+    const propsInput = { style: styleInput, size: "large", disabled: props.questionAnswered, onPressEnter: confirmInput }
+    const [input, inputStr, setInputStr] = useInput(propsInput)
 
-    function handleChange(event) {
-        const str = event.target.value;
-        setInputStr(str);
-    }
+    //if new question set not answered
+    useEffect(() => {
+        setInputStr("")
+    }, [props.questionID])
 
-    function onButtonPressed(){
+    function confirmInput(){
         postAnswer(props.questionID, inputStr).then(res=>{
             props.onQuestionAnswered(res)
         })
-        setInputStr("");
+        //setInputStr("");
     }
+
+    function onQuestionCompleted(){
+        props.onQuestionCompleted()
+    }
+
+    const styleSpace = {
+        width: "100%"
+    }
+
+    const questionAnswerButtons = 
+        <Space style={styleSpace} size={"small"} direction="horizontal">
+            <Button disabled={inputStr == ""} onClick={confirmInput}>Answer</Button>
+            <Button onClick={onQuestionCompleted}>Skip</Button>
+        </Space>
     
     return (
         <div>
-            <input type="text" value={inputStr} onChange={handleChange}/>
-            <button onClick={()=>onButtonPressed()}>Answer</button>
+            <Space style={styleSpace} size={"large"} direction="vertical">
+                {input}
+                {!props.questionAnswered && questionAnswerButtons}
+                {props.questionAnswered && <Button onClick={onQuestionCompleted}>Next Question</Button>}
+            </Space>
         </div>
     )
 }
+
 
 
 
