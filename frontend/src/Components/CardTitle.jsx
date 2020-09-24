@@ -2,14 +2,17 @@ import { Card, Typography } from 'antd';
 import React from 'react';
 
 export default function CardTitle(props){
+    const maxSize = 500
+    const margin = 10;
     const styleParent ={
-        maxWidth: 420,
+        maxWidth: maxSize + margin*2,
         margin: "auto",
     }
     const styleCard = {
-        marginLeft: 10,
-        marginRight: 10,
-        maxWidth: 400,
+        marginLeft: margin,
+        marginRight: margin,
+        maxWidth: maxSize,
+        ...props.style
     }
 
     return (

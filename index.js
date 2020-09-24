@@ -57,7 +57,7 @@ app.post("/question", async (req, res, next) => {
         const question = await db.Question.create(req.body)
         return success(res, question)
     } catch (err) {
-        next({ status: 400, message: err })
+        next({ status: 400, message: "err is " + err })
     }
 })
 
@@ -83,7 +83,7 @@ app.use(function (req, res) {
 
 //idk if this can still be reached with the above
 app.use((err, req, res, next) => {
-    console.log("other")
+    console.log("other: " + err.status + " " + err.message)
     return res.status(err.status || 400).json({
         status: err.status || 400,
         message: err.message || "there was an error processing request",

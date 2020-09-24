@@ -11,10 +11,10 @@ export function useAllQuestions() {
 }
 
 
-export function useAnswers(questionID) {
+export function useAnswers(questionID, initalState) {
     const url = backend + `question/${questionID}/answers`
     console.log("useAnswers" + questionID)
-    return useGet(url)
+    return useGet(url, initalState)
 }
 
 export function useAnswerBy(questionID, authorID) {
@@ -41,15 +41,17 @@ export async function postAnswer(questionID, answerText) {
 //returns [] or result and function to refresh result
 function useGet(url, intialState = []){
     const [response, setResponse] = useState(intialState);
-    const [cancelToken, setCancelToken] = useState(axios.CancelToken.source());
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(()=>{
-        updateGetNetwork()
-        //return (cancelToken.cancel) //cancel ongoing request on unmount/rerender
-    }, [url])
+        setResponse(intialState) //reset response to inital state
+        const newToken = axios.CancelToken.source()
+        updateGetNetwork(newToken)
+        return (newToken.cancel) //cancel ongoing request on unmount/rerender
+    }, [refresh, url])
 
     //fetch from backend
-    function updateGetNetwork(){
+    function updateGetNetwork(cancelToken){
         console.log("getting "+ url);
         const token = cancelToken.token;
         axios.get(url, {cancelToken: token}).then(result => {
@@ -72,7 +74,12 @@ function useGet(url, intialState = []){
         setResponse(set);
     }
 
-    return [response, updateLocal, updateGetNetwork]
+    function doRefresh(){
+        //force update by changing useEffect dep
+        setRefresh(!refresh);
+    }
+
+    return [response, updateLocal, doRefresh]
 }
 
 
