@@ -1,11 +1,9 @@
 import { Space } from 'antd';
 import React from 'react';
 import { postQuestion } from '../APIHelper';
+import useUserID from './../Util/useUserID';
 import CardTitle from './CardTitle';
 import useInputAndConfirmButton from './useInputAndConfirmButton';
-
-//Generally, reusable components go into their own files whereas components that are dependent on each other for a specific purpose go in the same file
-
 
 //make component Input and combine with button here
 export default function QuestionAsker(props) {
@@ -40,10 +38,11 @@ export default function QuestionAsker(props) {
 function useAskQuestion(onQuestionAsked){
     const propsInput = { size: "large", onPressEnter: confirmInput }
     const [input, inputStr, setInputStr, ConfirmButton] = useInputAndConfirmButton(propsInput, confirmInput)
+    const userID = useUserID()
 
     function confirmInput() {
         const str = addPostfix(inputStr, "?")
-        postQuestion(str).then(res => {
+        postQuestion(str, userID).then(res => {
             onQuestionAsked(res)
         })
         setInputStr("");

@@ -3,7 +3,7 @@ const mongoose = require("mongoose") // requiring the mongoose package
 const questionSchema = new mongoose.Schema({
     question: {
         type: String, 
-        unique: true,
+        //unique: true,
         required: true, 
     },
     authorID: {

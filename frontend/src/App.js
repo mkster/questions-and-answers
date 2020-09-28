@@ -1,5 +1,6 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Layout } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.less';
 import QAContent from './Components/QAContent';
 import useTopNavigation from './Components/useTopNavigation';
@@ -9,10 +10,19 @@ const { Header, Footer, Content } = Layout;
 
 export default function App() {
   const [TopNavigation, navigationSelection, setNavigationSelection] = useTopNavigation()
+  const { loginWithRedirect, logout } = useAuth0();
 
   function onQuestionAsked(){
     setNavigationSelection("answer")
   }
+
+  useEffect(()=>{
+    if (navigationSelection === "login"){
+      loginWithRedirect();
+    } else if (navigationSelection === "logout"){
+      logout();
+    }
+  }, [navigationSelection])
 
   return (
     <Layout style={{minHeight: "100vh"}}>

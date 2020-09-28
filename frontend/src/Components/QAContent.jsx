@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAllQuestions } from './../APIHelper';
 import Hider from "./Hider";
 import Question from './Question';
 import QuestionAsker from "./QuestionAsker";
+import UserQuestions from './UserQuestions';
 
 export default function QAContent(props){
     const [question, goToNextQuestion, onQuestionAsked] = useCurrentQuestion(props.onQuestionAsked)
@@ -16,16 +17,21 @@ export default function QAContent(props){
             <Hider hidden={props.navigationSelection !== "answer"}>
                 {question && <Question onQuestionCompleted={goToNextQuestion} question={question} />}
             </Hider>
+            {props.navigationSelection === "userQuestions" && <UserQuestions/>}
         </div>
     )
 }
 
-
 function useCurrentQuestion(_onQuestionAsked){
     const [questions, setQuestions, fetchQuestions] = useAllQuestions();
-    const [iCurrentQuestion, setICurrentQuestion] = useState(6); //nope this needs to stay when switching tabs, router? or higher state?
+    const [iCurrentQuestion, setICurrentQuestion] = useState(0);
 
-    //TODO going backwards throug Q latest Q first
+    //when questions ready set curretn question to latest question
+    useEffect(()=>{
+        if (questions) setICurrentQuestion(questions.length-1)
+    }, [questions != null])
+
+    //going backwards throug Qs latest Q first
     function goToNextQuestion() {
         const i = (iCurrentQuestion + 1) % questions.length;
         setICurrentQuestion(i)
@@ -40,6 +46,6 @@ function useCurrentQuestion(_onQuestionAsked){
         }
     }
 
-    const question = questions[iCurrentQuestion]
+    const question = questions && questions[iCurrentQuestion]
     return [question, goToNextQuestion, onQuestionAsked]
 }

@@ -40,7 +40,9 @@ export default function QuestionAnswerer (props) {
                     {input}
                     <div style={styleBottomSpace}>
                         <div style={stylePostionInBottomSpace}>
-                            {!props.questionAnswered ? 
+                            {
+                            props.questionAnswered === null ? null : 
+                            !props.questionAnswered ? 
                                 questionAnswerButtons : 
                                 <Button onClick={props.onQuestionCompleted}>Next Question</Button>
                             }

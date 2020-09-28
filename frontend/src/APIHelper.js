@@ -3,43 +3,47 @@ import { useEffect, useState } from 'react';
 const axios = require('axios').default;
 const backend = ''//'http://localhost:3001/' //this is done by "proxy" in package.json
 
-const currentUserID = 1; //TODO I guess normally the backedn should know current user instead of passing it here
-
 export function useAllQuestions() {
     const url = backend + "questions"
     return useGet(url)
 }
 
-
-export function useAnswers(questionID, initalState) {
-    const url = backend + `question/${questionID}/answers`
-    console.log("useAnswers" + questionID)
-    return useGet(url, initalState)
-}
-
-export function useAnswerBy(questionID, authorID) {
-    const url = backend + `question/${questionID}/answers/${authorID}`
+export function useQuestionsBy(authorID) {
+    const url = backend + `questions?authorID=${authorID}`
     return useGet(url)
 }
 
-export async function postQuestion(questionText) {
-    const authorID = currentUserID;
+export function useAnswers(questionID) {
+    const url = backend + `questions/${questionID}/answers`
+    return useGet(url) 
+}
+
+export function useAnswerBy(questionID, authorID) {
+    const url = backend + `questions/${questionID}/answers/${authorID}`
+    return useGet(url)
+}
+
+export async function postQuestion(questionText, authorID) {
     const answerData = { question: questionText, authorID: authorID }
-    const url = backend + `question`
+    const url = backend + `questions`
     return await post(url, answerData)
 }
 
-export async function postAnswer(questionID, answerText) {
-    const authorID = currentUserID;
+export async function postAnswer(questionID, answerText, authorID) {
     const answerData = { answer: answerText, questionID: questionID, authorID : authorID}
-    const url = backend + `answer`
+    const url = backend + `answers`
     const res = await post(url, answerData)
     return res;
 }
 
+export async function deleteQuestion(questionID) {
+    const url = backend + `questions/${questionID}`
+    return await del(url)
+}
+
 //could call this useStateFetched, TODO maybe return soemthign different for error and not fetched yet
 //returns [] or result and function to refresh result
-function useGet(url, intialState = []){
+function useGet(url, intialState = null){
     const [response, setResponse] = useState(intialState);
     const [refresh, setRefresh] = useState(false);
 
@@ -52,19 +56,19 @@ function useGet(url, intialState = []){
 
     //fetch from backend
     function updateGetNetwork(cancelToken){
-        console.log("getting "+ url);
+        //console.log("getting "+ url);
         const token = cancelToken.token;
         axios.get(url, {cancelToken: token}).then(result => {
-            console.log("get suc " + result.data);
+            //console.log("get suc " + result.data);
             setResponse(result.data)
         }, failReason => {
             //failed
             //dont set state on cancled request since the component is already unmounted
             if (!axios.isCancel(failReason)) {
-                console.log("get fail " + failReason);
+                //console.log("get fail " + failReason);
                 setResponse([])
             }else{
-                console.log("axious cancel get")
+                //console.log("axious cancel get")
             }
         })
     }
@@ -97,6 +101,18 @@ async function post(url, data) {
     return res;
 }
 
+async function del(url) {
+    console.log("deleting " + url);
+    const res = axios.delete(url).then(result => {
+        console.log("del sucess ", result.data);
+        return result.data
+    }, failReason => {
+        //failed
+        console.log("del fail " + failReason);
+        return []
+    })
+    return res;
+}
 
 
 export default {};

@@ -1,11 +1,20 @@
+import { Auth0Provider } from "@auth0/auth0-react";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <App />,
+  <Auth0Provider
+    domain="dev-934u86xf.eu.auth0.com"
+    clientId="GxcSvPMunK9a9CH6qVwxwVR41QOjPOeC"
+    redirectUri={window.location.origin}
+    audience="https://dev-934u86xf.eu.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata read:openid"
+  >
+    <App />
+  </Auth0Provider>,
   document.getElementById('root')
 );
 

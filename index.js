@@ -17,17 +17,24 @@ function success(res, payload) {
 }
 
 //get all
+//or from specified author /questions?authorID=1234
 app.get("/questions", async (req, res, next) => {
     try {
-        const teams = await db.Question.find({})
-        return success(res, teams)
+        const authorID = req.query.authorID
+        if (!authorID){
+            const teams = await db.Question.find({})
+            return success(res, teams)
+        }else{
+            const teams = await db.Question.find({ authorID: authorID})
+            return success(res, teams)
+        }
     } catch (err) {
         next({ status: 400, message: err })
     }
 })
 
 //answers to question id
-app.get("/question/:id/answers", async (req, res, next) => {
+app.get("/questions/:id/answers", async (req, res, next) => {
     try {
         let questionID = req.params.id
         const teams = await db.Answer.find({ questionID: questionID})
@@ -37,12 +44,23 @@ app.get("/question/:id/answers", async (req, res, next) => {
     }
 })
 
-//answer to question id by author
-app.get("/question/:questionID/answers/:authorID", async (req, res, next) => {
+//answer to question id by author, returns false if author didnt answer
+app.get("/questions/:questionID/answers/:authorID", async (req, res, next) => {
     try {
         const questionID = req.params.questionID
         const authorID = req.params.authorID;
-        const teams = await db.Answer.findOne({ questionID: questionID, authorID: authorID })
+        const answer = await db.Answer.findOne({ questionID: questionID, authorID: authorID })
+        const ret = answer != null ? answer : false
+        return success(res, ret)
+    } catch (err) {
+        next({ status: 400, message: err })
+    }
+})
+
+app.delete("/questions/:questionID", async (req, res, next) => {
+    try {
+        const questionID = req.params.questionID
+        const teams = await db.Question.deleteOne({ _id: questionID})
         return success(res, teams)
     } catch (err) {
         next({ status: 400, message: err })
@@ -50,9 +68,10 @@ app.get("/question/:questionID/answers/:authorID", async (req, res, next) => {
 })
 
 
+//////////////create
+/////////////////////////////
 
-//create
-app.post("/question", async (req, res, next) => {
+app.post("/questions", async (req, res, next) => {
     try {
         const question = await db.Question.create(req.body)
         return success(res, question)
@@ -62,7 +81,7 @@ app.post("/question", async (req, res, next) => {
 })
 
 //create
-app.post("/answer", async (req, res, next) => {
+app.post("/answers", async (req, res, next) => {
     try {
         const answer = await db.Answer.create(req.body)
         return success(res, answer)
