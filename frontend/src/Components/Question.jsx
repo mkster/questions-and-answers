@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { postAnswer, useAnswerBy, useAnswers } from '../APIHelper';
-import useUserID from './../Util/useUserID';
+import { postAnswer, useAnswerBy, useAnswers } from '../util/apiHelper';
+import useUserID from '../util/useUserID';
 import QuestionAnswerer from './QuestionAnswerer';
 import QuestionAnswers from './QuestionAnswers';
 

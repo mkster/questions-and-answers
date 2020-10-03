@@ -1,8 +1,8 @@
 
 import { Button } from 'antd';
 import React from 'react';
-import { deleteQuestion, useAnswers, useQuestionsBy } from '../APIHelper';
-import useUserID from './../Util/useUserID';
+import { deleteQuestion, useAnswers, useQuestionsBy } from '../util/apiHelper';
+import useUserID from '../util/useUserID';
 import CardTitle from './CardTitle';
 import QuestionAnswers from './QuestionAnswers';
 

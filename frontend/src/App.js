@@ -3,8 +3,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Layout, Typography } from 'antd';
 import React from 'react';
 import './App.less';
-import QAContent from './Components/QAContent';
-import useTopNavigation from './Components/useTopNavigation';
+import QAContent from './components/QAContent';
+import useTopNavigation from './components/useTopNavigation';
 const { Header, Footer, Content } = Layout;
 const { Link } = Typography;
 

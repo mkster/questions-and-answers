@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAllQuestions } from './../APIHelper';
+import { useAllQuestions } from '../util/apiHelper';
 import Hider from "./Hider";
 import Question from './Question';
 import QuestionAsker from "./QuestionAsker";

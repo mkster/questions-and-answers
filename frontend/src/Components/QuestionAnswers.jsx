@@ -1,7 +1,7 @@
 
 import { Typography } from 'antd';
 import React from 'react';
-import useUserID from './../Util/useUserID';
+import useUserID from '../util/useUserID';
 import CardTitle from './CardTitle';
 
 export default function QuestionAnswers(props){
