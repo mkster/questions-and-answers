@@ -37,7 +37,7 @@ export default function App() {
 function LayoutFooter(){
   return (
     <Footer>
-      <Link href="https://github.com/mkster" target="_blank">
+      <Link href="https://github.com/mkster/questions-and-answers" target="_blank">
         <GithubOutlined /> View Code
       </Link>
     </Footer>
