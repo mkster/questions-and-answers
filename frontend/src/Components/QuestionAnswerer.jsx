@@ -3,13 +3,10 @@ import React, { useEffect, useRef } from 'react';
 import CardTitle from './CardTitle';
 import useInputAndConfirmButton from './useInputAndConfirmButton';
 
-//container: lifecycle methods, logic
-//display: all methods adn  value from props
-
 
 //make component Input and combine with button here
 export default function QuestionAnswerer (props) {
-    const [input, inputStr, confirmInput, ConfirmButton] = useAnswerInput(props.questionID, props.questionAnswered, props.onQuestionAnswered)
+    const [input, , , ConfirmButton] = useAnswerInput(props.questionID, props.questionAnswered, props.onQuestionAnswered)
 
     const styleSpace = {
         width: "100%"
@@ -63,8 +60,8 @@ function useAnswerInput(questionID, questionAnswered, onQuestionAnswered){
     //if new question set not answered
     useEffect(() => {
         setInputStr("")
-        inputRef.current.focus();
-    }, [questionID])
+        //inputRef.current.focus();
+    }, [questionID, setInputStr])
 
     function confirmInput() {
         onQuestionAnswered(inputStr)

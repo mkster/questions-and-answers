@@ -8,9 +8,9 @@ import QuestionAnswers from './QuestionAnswers';
 
 export default function UserQuestions(props){
     const id = useUserID()
-    const [questions, setQuestions, doRefresh] = useQuestionsBy(id)
+    const [questions, setQuestions, ] = useQuestionsBy(id)
 
-    function deleteThisQuestion(i) {
+    function _deleteQuestion(i) {
         deleteQuestion(questions[i]._id)
         const copy = [...questions]
         copy.splice(i,1)
@@ -21,29 +21,26 @@ export default function UserQuestions(props){
         !questions ? null : 
         questions.length > 0 ?
             questions.map((question, i)=>
-                <div key={question._id}>
+                <React.Fragment key={question._id}>
                     <br/>
-                    <UserQuestion deleteQuestion={()=>deleteThisQuestion(i)} question={question}/>
-                </div>
+                    <UserQuestion deleteQuestion={()=>_deleteQuestion(i)} question={question}/>
+                </React.Fragment>
             )
         :
-            <div>
-            <br/>
             <CardTitle title={"You have asked no questions"}/>
-            </div>
     )
 }
 
 function UserQuestion(props){
-    const [answers, setAnswers, fetchAnswers] = useAnswers(props.question._id, null);
+    const [answers, , ] = useAnswers(props.question._id, null);
 
     return (
-        <div>
+        <>
             <CardTitle title={props.question.question}>
                 <Button onClick={props.deleteQuestion}>Delete</Button>
             </CardTitle>
             <br/>
             <QuestionAnswers questionAnswered={true} answers={answers} />
-        </div>
+        </>
     )
 }

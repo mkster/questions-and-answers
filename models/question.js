@@ -10,6 +10,10 @@ const questionSchema = new mongoose.Schema({
         type: String, 
         required: true,
     },
+    schema_version: {
+        type: Number,
+        default : 2,
+    },
 })
 
 const questionModel = mongoose.model("question", questionSchema) // creating the model from the schema

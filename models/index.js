@@ -15,5 +15,5 @@ mongoose.connect(db, {
 mongoose.set("debug", true) // enabling debugging information to be printed to the console for debugging purposes
 mongoose.Promise = Promise // setting mongoose's Promise to use Node's Promise
 
-module.exports.Question = require("./question") // requiring the todo model that we just created in mongodb
-module.exports.Answer = require("./answer") // requiring the todo model that we just created in mongodb
+module.exports.Question = require("./question")
+module.exports.Answer = require("./answer") 

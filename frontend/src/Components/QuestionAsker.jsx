@@ -12,26 +12,14 @@ export default function QuestionAsker(props) {
     const styleSpace = {
         width: "100%"
     }
-    const styleCenter = {
-        //margin: 0,
-        position: "absolute",
-        top: "50%",
-        msTransform: "translateY(-50%)",
-        transform: "translateY(-50%)",
-    }
     
-    //TODO center card vertically
-    //TODO use ref to focus input rigth awya
     return (
-        <div>
-            <br/>
-            <CardTitle title="Ask a Question" >
-                <Space style={styleSpace} size={"large"} direction="vertical">
-                    {input}
-                    <ConfirmButton>Ask</ConfirmButton>
-                </Space>
-            </CardTitle>
-        </div>
+        <CardTitle title="Ask a Question" >
+            <Space style={styleSpace} size={"large"} direction="vertical">
+                {input}
+                <ConfirmButton>Ask</ConfirmButton>
+            </Space>
+        </CardTitle>
     )
 }
 

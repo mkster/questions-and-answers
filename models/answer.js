@@ -14,6 +14,10 @@ const answerSchema = new mongoose.Schema({
         type: String, 
         required: true, 
     },
+    schema_version: {
+        type: Number,
+        default: 2,
+    },
 })
 
 const answerModel = mongoose.model("answer", answerSchema) // creating the model from the schema

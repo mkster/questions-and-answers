@@ -8,9 +8,13 @@ import UserQuestions from './UserQuestions';
 export default function QAContent(props){
     const [question, goToNextQuestion, onQuestionAsked] = useCurrentQuestion(props.onQuestionAsked)
 
+    const styleDiv = {
+        marginTop : "25px",
+    }
+
     //using hider to not rerender and loose state
     return(
-        <div>
+        <div style={styleDiv}>
             <Hider hidden={props.navigationSelection !== "ask"}>
                 <QuestionAsker onQuestionAsked={onQuestionAsked} />
             </Hider>
@@ -23,13 +27,14 @@ export default function QAContent(props){
 }
 
 function useCurrentQuestion(_onQuestionAsked){
-    const [questions, setQuestions, fetchQuestions] = useAllQuestions();
-    const [iCurrentQuestion, setICurrentQuestion] = useState(0);
+    const [questions, setQuestions, ] = useAllQuestions();
+    const [iCurrentQuestion, setICurrentQuestion] = useState(-1);
 
     //when questions ready set curretn question to latest question
     useEffect(()=>{
-        if (questions) setICurrentQuestion(questions.length-1)
-    }, [questions != null])
+        const readyToInit = iCurrentQuestion === -1 && questions != null
+        if (readyToInit) setICurrentQuestion(questions.length-1)
+    }, [questions, iCurrentQuestion])
 
     //going backwards throug Qs latest Q first
     function goToNextQuestion() {

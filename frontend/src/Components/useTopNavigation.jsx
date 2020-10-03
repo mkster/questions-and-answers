@@ -5,14 +5,15 @@ import React, { useState } from 'react';
 
 const { SubMenu } = Menu;
 
-export default function useTopNavigation() {
+export default function useTopNavigation(onSelectionChange) {
     const [currentSelection, setCurrentSelection] = useState("answer")
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const {isAuthenticated, isLoading } = useAuth0();
 
     const loggedIn = !isLoading && isAuthenticated
 
     function handleClick(e) {
         setCurrentSelection(e.key);
+        onSelectionChange(e.key)
     };
 
     const userMenuLoading =

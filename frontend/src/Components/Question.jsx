@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { postAnswer, useAnswerBy, useAnswers } from '../APIHelper';
 import useUserID from './../Util/useUserID';
@@ -9,16 +10,15 @@ import QuestionAnswers from './QuestionAnswers';
 export default function Question(props) {
   const userID = useUserID()
   const question = props.question;
-  const [answers, setAnswers, fetchAnswers] = useAnswers(question._id);
+  const [answers, setAnswers, ] = useAnswers(question._id);
   const [questionAnswered, setQuestionAnswered] = useQuestionAnswered(question._id, userID)
 
   function onQuestionAnswered(answer){
     const answerQuestionID = props.question._id
-    console.log(answerQuestionID)
     postAnswer(answerQuestionID, answer, userID).then(addition => {
       //dont change stuff if a new question was already selected now
       if (answerQuestionID === props.question._id) {
-        const error = addition.length === 0 //TODO handle error somehow? perhaps in root function though TOOD this is not error state always could also be empty, need to do that correctly
+        const error = addition === null
         if (!error) setAnswers([...answers, addition])
         setQuestionAnswered();
       }
@@ -26,19 +26,19 @@ export default function Question(props) {
   }
 
   return (
-    <div >
-      <br/>
-      <QuestionAnswerer questionID={question._id} questionTitle={question.question} questionAnswered={questionAnswered} onQuestionAnswered={onQuestionAnswered} onQuestionCompleted={props.onQuestionCompleted} />
-      <br/>
-      <QuestionAnswers questionAnswered={questionAnswered} answers={answers}/>
-    </div>
+    <>
+      <Space style={{width: "100%"}} size={"large"} direction="vertical">
+        <QuestionAnswerer questionID={question._id} questionTitle={question.question} questionAnswered={questionAnswered} onQuestionAnswered={onQuestionAnswered} onQuestionCompleted={props.onQuestionCompleted} />
+        <QuestionAnswers questionAnswered={questionAnswered} answers={answers}/>
+      </Space>
+    </>
   );
 }
 
 
 function useQuestionAnswered(questionID, userID){
   const [questionsAnswered, setQuestionsAnswered] = useState([]); 
-  const [answer, setAnswer, updateAnswer] = useAnswerBy(questionID, userID)
+  const [answer, , ] = useAnswerBy(questionID, userID)
 
   //new user reset table
   useEffect(() => {
