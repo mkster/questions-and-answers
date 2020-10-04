@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import React from 'react';
-import { postQuestion } from '../utils/apiHelperr';
-import useUserID from '../utils/useUserIDD';
+import { postQuestion } from '../util/apiHelper';
+import useUserID from '../util/useUserID';
 import CardTitle from './CardTitle';
 import useInputAndConfirmButton from './useInputAndConfirmButton';
 
