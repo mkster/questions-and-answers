@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import React from 'react';
-import { postQuestion } from '../util/apiHelper';
-import useUserID from '../util/useUserID';
+import { postQuestion } from '../utils/apiHelperr';
+import useUserID from '../utils/useUserIDD';
 import CardTitle from './CardTitle';
 import useInputAndConfirmButton from './useInputAndConfirmButton';
 
@@ -10,7 +10,7 @@ export default function QuestionAsker(props) {
     const [input, ConfirmButton] = useAskQuestion(props.onQuestionAsked);
 
     const styleSpace = {
-        width: "100%"
+        width: "100%",
     }
     
     return (
