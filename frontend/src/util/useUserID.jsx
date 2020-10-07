@@ -1,10 +1,30 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { useState } from 'react';
 
 export default function useUserID(){
+    //generate guid for not authenticated user
+    const [anonymousUserID,] = useState(getAnonymousUserID())
+    console.log(anonymousUserID);
     const { user, isAuthenticated, isLoading } = useAuth0();
     if (isLoading) return null;
     if (isAuthenticated) return user.sub
-    return "anonymousUser";
+    return anonymousUserID;
+}
+
+function getAnonymousUserID(){
+    let id = localStorage.getItem('anonymousUserID');
+    if (!id){
+        id = uuidv4()
+        localStorage.setItem('anonymousUserID', id);
+    }
+    return id;
+}
+
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r && 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 /*

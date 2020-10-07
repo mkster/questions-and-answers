@@ -1,10 +1,9 @@
-
 import { Typography } from 'antd';
 import React from 'react';
 import useUserID from '../util/useUserID';
 import CardTitle from './CardTitle';
 
-export default function QuestionAnswers(props){
+export default function QuestionAnswers(props) {
   //const n = props.answers === null ? "_" : props.answers.length;
   //const title = `Answer to see ${n} Answers`
   const userID = useUserID()
@@ -15,11 +14,11 @@ export default function QuestionAnswers(props){
       :
         <CardTitle title={"Answers"} >
           <Typography>
-          {props.answers ? props.answers.map(a =>
-            <Typography.Paragraph key={a._id}>
-              {userID === a.authorID ? <b>{a.answer}</b>: a.answer}
-            </Typography.Paragraph>
-          ): null}
+            {props.answers ? props.answers.map(a =>
+              <Typography.Paragraph key={a._id}>
+                {userID === a.authorID ? <b>{a.answer}</b>: a.answer}
+              </Typography.Paragraph>
+            ): null}
           </Typography>
         </CardTitle>
       }

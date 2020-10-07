@@ -2,8 +2,6 @@ const mongoose = require("mongoose")
 
 //pushed to heroku likle this: https://medium.com/crowdbotics/deploy-a-mern-stack-app-on-heroku-b0c255744a70
 //heroko thingy: stormy-hollows-66753
-//heroku config:set MONGODB_URI=mongodb+srv://max:ggWxuDqlrbGk3WzQ@cluster0.zq8om.mongodb.net/Cluster0 -a stormy-hollows-66753
-
 
 const db ='mongodb+srv://max:ggWxuDqlrbGk3WzQ@cluster0.zq8om.mongodb.net/Cluster0?retryWrites=true&w=majority'
 //const db = "mongodb://localhost/QuestionsAndAnswers"
