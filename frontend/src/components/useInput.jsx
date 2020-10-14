@@ -12,7 +12,6 @@ export default function useInput() {
     setInputStr(str);
   }
 
-  // return element not component to avoid creating new instances that loose focus etc
   const inputProps = { value : inputStr , onChange : handleChange }
   return [Input, inputProps, inputStr, setInputStr];
 }
