@@ -6,6 +6,7 @@ Live at: https://stormy-hollows-66753.herokuapp.com/
 ## Tools used
 * React
 * Create-react-app
+* Styled-components
 * Craco
 * Axios
 * Auth0

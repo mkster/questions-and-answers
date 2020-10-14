@@ -4,13 +4,19 @@ import React from 'react';
 import './App.less';
 import QAContent from './components/QAContent';
 import QAFooter from './components/QAFooter';
-import useTopNavigation from './components/useTopNavigation';
+import { QATopNavigation, useTopNavigationState } from './components/QATopNavigation';
 
 const { Header, Footer, Content } = Layout;
 
 export default function App() {
-  const { loginWithRedirect, logout } = useAuth0();
-  function onSelectionChange(newSelection) {
+  const [currentNavSelection, setNavCurrentSelection, onMenuClick] = useTopNavigationState(onNavigationChange)
+  const {loginWithRedirect, logout } = useAuth0();
+
+  function onQuestionAsked() {
+    setNavCurrentSelection('answer');
+  }
+
+  function onNavigationChange(newSelection){
     if (newSelection === 'login') {
       loginWithRedirect();
     } else if (newSelection === 'logout') {
@@ -18,20 +24,10 @@ export default function App() {
     }
   }
 
-  const [
-    TopNavigation,
-    navigationSelection,
-    setNavigationSelection,
-  ] = useTopNavigation(onSelectionChange);
-
-  function onQuestionAsked() {
-    setNavigationSelection('answer');
-  }
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header><TopNavigation /></Header>
-      <Content style={{ height: '100%' }}><QAContent navigationSelection={navigationSelection} onQuestionAsked={onQuestionAsked} /></Content>
+      <Header><QATopNavigation currentNavSelection={currentNavSelection} onMenuClick={onMenuClick} /></Header>
+      <Content style={{ height: '100%' }}><QAContent navigationSelection={currentNavSelection} onQuestionAsked={onQuestionAsked} /></Content>
       <Footer><QAFooter/></Footer>
     </Layout>
   );

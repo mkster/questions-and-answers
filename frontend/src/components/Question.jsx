@@ -1,9 +1,9 @@
-import { Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { postAnswer, useAnswerBy, useAnswers } from '../util/apiHelper';
 import useUserID from '../util/useUserID';
 import QuestionAnswerer from './QuestionAnswerer';
 import QuestionAnswers from './QuestionAnswers';
+import SpaceFullWidth from './SpaceFullWidth';
 
 
 //only show answerer, then reavel answrs once answered
@@ -27,10 +27,10 @@ export default function Question(props) {
 
   return (
     <>
-      <Space style={{width: "100%"}} size={"large"} direction="vertical">
+      <SpaceFullWidth size={"large"} direction="vertical">
         <QuestionAnswerer questionID={question._id} questionTitle={question.question} questionAnswered={questionAnswered} onQuestionAnswered={onQuestionAnswered} onQuestionCompleted={props.onQuestionCompleted} />
         <QuestionAnswers questionAnswered={questionAnswered} answers={answers}/>
-      </Space>
+      </SpaceFullWidth>
     </>
   );
 }

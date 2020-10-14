@@ -4,7 +4,6 @@ import { useState } from 'react';
 export default function useUserID(){
     //generate guid for not authenticated user
     const [anonymousUserID,] = useState(getAnonymousUserID())
-    console.log(anonymousUserID);
     const { user, isAuthenticated, isLoading } = useAuth0();
     if (isLoading) return null;
     if (isAuthenticated) return user.sub

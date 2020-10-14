@@ -17,14 +17,15 @@ export default function UserQuestions(props) {
   }
 
   return (
-    !questions ? null
+    !questions 
+      ? null
       : questions.length > 0
         ? questions.map((question, i) => (
-          <React.Fragment key={question._id}>
-            <br />
-            <UserQuestion deleteQuestion={() => _deleteQuestion(i)} question={question} />
-          </React.Fragment>
-        ))
+            <React.Fragment key={question._id}>
+              <br />
+              <UserQuestion deleteQuestion={() => _deleteQuestion(i)} question={question} />
+            </React.Fragment>
+          ))
         : <CardTitle title="You have asked no questions" />
   );
 }

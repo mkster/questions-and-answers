@@ -5,24 +5,30 @@ import React, { useState } from 'react';
 
 const { SubMenu } = Menu;
 
-export default function useTopNavigation(onSelectionChange) {
-    const [currentSelection, setCurrentSelection] = useState("answer")
-    const {isAuthenticated, isLoading } = useAuth0();
+export function useTopNavigationState(onNavigationChange) {
+    const [currentNavSelection, setNavCurrentSelection] = useState("answer")
 
-    const loggedIn = !isLoading && isAuthenticated
-
-    function handleClick(e) {
-        setCurrentSelection(e.key);
-        onSelectionChange(e.key)
+    function onMenuClick(e) {
+        const newSelection = e.key
+        setNavCurrentSelection(newSelection);
+        onNavigationChange(newSelection)
     };
 
+    return [currentNavSelection, setNavCurrentSelection, onMenuClick]
+}
+
+export function QATopNavigation(props){
+    const { isAuthenticated, isLoading } = useAuth0();
+    const loggedIn = !isLoading && isAuthenticated
+    
     const userMenuLoading =
         <SubMenu key="SubMenu" disabled={false} icon={<UserOutlined />}>
             <Menu.Item key="" disabled={true}>Loading</Menu.Item>
         </SubMenu>
 
-    const userMenuLoggedOut = 
+    const userMenuLoggedOut =
         <SubMenu key="SubMenu" disabled={false} icon={<UserOutlined />}>
+            <Menu.Item key="userQuestions">Your Questions</Menu.Item>
             <Menu.Item key="login">Login</Menu.Item>
         </SubMenu>
 
@@ -34,21 +40,14 @@ export default function useTopNavigation(onSelectionChange) {
 
     const menuUser = isLoading ? userMenuLoading : !loggedIn ? userMenuLoggedOut : userMenuLoggedIn
 
-    //const { currentSelection } = this.state;
-    const TopNavigation = ()=>(
-        <Menu onClick={handleClick} selectedKeys={[currentSelection]} theme="dark" mode="horizontal">
+    return (
+        <Menu onClick={props.onMenuClick} selectedKeys={[props.currentNavSelection]} theme="dark" mode="horizontal">
             {menuUser}
-            <Menu.Item key="ask" style={{ fontSize: '16px'}} icon={<QuestionCircleOutlined />}>
+            <Menu.Item key="ask" style={{ fontSize: '16px' }} icon={<QuestionCircleOutlined />}>
             </Menu.Item>
             <Menu.Item key="answer" icon={<ExclamationCircleOutlined />}>
             </Menu.Item>
         </Menu>
-    )
-    return [TopNavigation, currentSelection, setCurrentSelection]
+    );
 }
 
-
-/*
-
-
-*/

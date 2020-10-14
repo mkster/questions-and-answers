@@ -1,10 +1,10 @@
 import { Input } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 // TODO make this useInputProps()
 
 // use Input (antd), auto capitalizes first char
-export default function useInput(props) {
+export default function useInput() {
   const [inputStr, setInputStr] = useState('')
 
   function handleChange(event) {
@@ -12,13 +12,11 @@ export default function useInput(props) {
     setInputStr(str);
   }
 
-  // if this is a function it keeps loosign focus for some reason
-  const input = <Input value={inputStr} onChange={handleChange} {...props} />
-  return [input, inputStr, setInputStr];
+  // return element not component to avoid creating new instances that loose focus etc
+  const inputProps = { value : inputStr , onChange : handleChange }
+  return [Input, inputProps, inputStr, setInputStr];
 }
 
 function firstCharUppercase(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
-
